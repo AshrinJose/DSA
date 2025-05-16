@@ -264,4 +264,78 @@ public class LinkedList {
 
     }
 
+    /*
+        You are required to use Floyd's cycle-finding algorithm (also known as the "tortoise and the hare" algorithm) to detect the loop.
+
+        This algorithm uses two pointers: a slow pointer and a fast pointer. The slow pointer moves one step at a time, while the fast pointer moves two steps at a time. If there is a loop in the linked list, the two pointers will eventually meet at some point. If there is no loop, the fast pointer will reach the end of the list.
+
+        The method should follow these guidelines:
+
+        Create two pointers, slow and fast, both initially pointing to the head of the linked list.
+
+        Traverse the list with the slow pointer moving one step at a time, while the fast pointer moves two steps at a time.
+
+        If there is a loop in the list, the fast pointer will eventually meet the slow pointer. If this occurs, the method should return true.
+
+        If the fast pointer reaches the end of the list or encounters a null value, it means there is no loop in the list. In this case, the method should return false.
+
+        Output:
+
+        Return true if the linked list has a loop.
+
+        Return false if the linked list does not have a loop.
+     */
+    public boolean hasLoop(){
+
+        Node slowPointer = head;
+        Node fastPointer = head;
+
+        while(fastPointer != null && fastPointer.next != null){
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next.next;
+
+            if(slowPointer == fastPointer) return true;
+
+        }
+        return false;
+    }
+
+    public Node findKthFromEnd(int k) {
+        /*int len =0;
+
+        Node temp = head;
+        while(temp != null){
+            len++;
+            temp = temp.next;
+        }
+
+        temp = head;
+        if(len < k)
+            return null;
+
+        for(int i=0; i < len-k; i++){
+            temp = temp.next;
+        }
+        return temp;
+         */
+
+        // efficient approach -> slow and fast pointer
+        Node slow = head;
+        Node fast = head;
+
+        for (int i = 0; i < k; i++) {
+            if (fast == null)
+                return null;
+
+            fast = fast.next;
+        }
+
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        return slow;
+    }
+
 }
